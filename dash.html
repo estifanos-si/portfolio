@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard & Login Mockups</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --surface: #1e293b;
+            --surface-hover: #334155;
+            --primary: #22d3ee;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 80px; /* Space between the two mockups */
+        }
+
+        .mockup-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        /* =========================================
+           MOCKUP 1: THE LOGIN PAGE
+           ========================================= */
+        .login-view {
+            height: 700px;
+            background: radial-gradient(circle at top left, #164e63 0%, var(--bg-dark) 50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 420px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .brand-logo {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--bg-dark);
+            margin: 0 auto 20px;
+        }
+
+        .login-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .login-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-main);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .login-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* =========================================
+           MOCKUP 2: THE ADMIN DASHBOARD
+           ========================================= */
+        .dashboard-view {
+            height: 750px;
+            background: var(--bg-dark);
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-brand {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--primary);
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            color: var(--text-muted);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .nav-item.active {
+            background: rgba(34, 211, 238, 0.1);
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+        }
+
+        /* Stats Row */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 24px;
+            border-radius: 12px;
+        }
+
+        .stat-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .stat-card h3 {
+            font-size: 2rem;
+            color: var(--text-main);
+        }
+
+        /* Table Section */
+        .table-container {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px 16px;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.95rem;
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .badge.fulfilled {
+            background: rgba(34, 197, 94, 0.1);
+            color: #4ade80;
+        }
+
+        .badge.pending {
+            background: rgba(234, 179, 8, 0.1);
+            color: #facc15;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SCREENSHOT 1: LOGIN PAGE -->
+    <div class="mockup-container login-view">
+        <div class="login-card">
+            <div class="brand-logo">
+                <i class="fa-solid fa-person-running"></i>
+            </div>
+            <h2>Admin Portal</h2>
+            <p>Sign in to manage event data</p>
+
+            <div class="input-group">
+                <label>Email Address</label>
+                <input type="email" value="" readonly>
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" value="" readonly>
+            </div>
+            <button class="login-btn">Secure Login</button>
+        </div>
+    </div>
+
+    <!-- SCREENSHOT 2: ADMIN DASHBOARD -->
+    <div class="mockup-container dashboard-view">
+        
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <i class="fa-solid fa-person-running"></i>
+                Coach Teresa's 5k
+            </div>
+            <div class="nav-item">
+                <i class="fa-solid fa-chart-line"></i> Overview
+            </div>
+            <div class="nav-item">
+                <i class="fa-solid fa-users"></i> Runners
+            </div>
+            <div class="nav-item active">
+                <i class="fa-solid fa-shirt"></i> Merch Orders
+            </div>
+            <div class="nav-item">
+                <i class="fa-solid fa-gear"></i> Settings
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="header">
+                <h1>T-Shirt Orders</h1>
+                <button class="login-btn" style="width: auto; padding: 10px 20px;">
+                    <i class="fa-solid fa-download"></i> Export CSV
+                </button>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <p>Total Apparel Ordered</p>
+                    <h3>342</h3>
+                </div>
+                <div class="stat-card">
+                    <p>Pending Fulfillment</p>
+                    <h3 style="color: #facc15;">84</h3>
+                </div>
+                <div class="stat-card">
+                    <p>Toronto Pickup</p>
+                    <h3>258</h3>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <div class="table-header">
+                    <h3>Recent Orders</h3>
+                    <div style="color: var(--text-muted); font-size: 0.9rem;">
+                        <i class="fa-solid fa-filter"></i> Filter by Size
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Runner Name</th>
+                            <th>Registration ID</th>
+                            <th>Size</th>
+                            
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>David O'Connor</td>
+                            <td style="font-family: monospace; color: var(--text-muted);">#TR-8924</td>
+                            <td><strong>Large</strong></td>
+                            
+                            <td><span class="badge pending">Pending</span></td>
+                        </tr>
+                        <tr>
+                            <td>Marcus Chen</td>
+                            <td style="font-family: monospace; color: var(--text-muted);">#TR-8922</td>
+                            <td><strong>Medium</strong></td>
+                            
+                            <td><span class="badge fulfilled">Fulfilled</span></td>
+                        </tr>
+                          <tr>
+                            <td>Priya Patel</td>
+                            <td style="font-family: monospace; color: var(--text-muted);">#TR-8925</td>
+                            <td><strong>Medium</strong></td>
+                            
+                            <td><span class="badge fulfilled">Fulfilled</span></td>
+                        </tr>
+                        <tr>
+                            <td>Sarah Jenkins</td>
+                            <td style="font-family: monospace; color: var(--text-muted);">#TR-8923</td>
+                            <td><strong>Small</strong></td>
+                            
+                            <td><span class="badge pending">Pending</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

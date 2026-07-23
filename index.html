@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Developer Portfolio</title>
+    
+    <!-- Swiper.js CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --accent-cyan: #22d3ee;
+            --accent-purple: #a855f7;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- Ambient Glows --- */
+        .glow {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            opacity: 0.15;
+            animation: pulse 8s infinite alternate;
+        }
+        .glow-1 { top: -10%; left: 10%; width: 400px; height: 400px; background: var(--accent-cyan); }
+        .glow-2 { top: 20%; right: 10%; width: 500px; height: 500px; background: var(--accent-purple); }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.1; }
+            100% { transform: scale(1.2); opacity: 0.2; }
+        }
+
+        /* --- Typography & Utilities --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .mono { font-family: 'Fira Code', monospace; }
+        
+        .gradient-text {
+            background: linear-gradient(to right, var(--accent-cyan), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            padding: 180px 0 120px;
+            position: relative;
+        }
+
+        .hero-greeting {
+            color: var(--accent-cyan);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+        }
+
+        /* --- Projects Section --- */
+        .projects {
+            padding: 80px 0;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 80px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-title::before {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 2px;
+            background: var(--accent-cyan);
+        }
+
+        .project-card {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            margin-bottom: 150px;
+            align-items: center;
+        }
+
+        @media (min-width: 900px) {
+            .project-card { flex-direction: row; }
+            .project-card:nth-child(even) { flex-direction: row-reverse; }
+            .project-gallery { width: 60%; }
+            .project-info { width: 40%; padding: 0 40px; }
+        }
+
+        /* --- Swiper Carousel Styles --- */
+        .project-gallery {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 20px 0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        .swiper {
+            width: 100%;
+            padding-top: 20px;
+            padding-bottom: 40px;
+        }
+
+        .swiper-slide {
+            background-position: center;
+            background-size: cover;
+            width: 80%;
+            max-width: 500px;
+            aspect-ratio: 16/9;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+        }
+
+        .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .swiper-slide img:hover {
+            transform: scale(1.02);
+        }
+
+        /* --- Custom Swiper Carousel Arrows --- */
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: var(--accent-cyan);
+            background: rgba(10, 10, 10, 0.6);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid rgba(34, 211, 238, 0.3);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .swiper-button-next:hover,
+        .swiper-button-prev:hover {
+            background: rgba(34, 211, 238, 0.15);
+            transform: scale(1.1);
+        }
+
+        .swiper-button-next::after,
+        .swiper-button-prev::after {
+            font-size: 1.2rem;
+            font-weight: 900;
+        }
+
+        /* --- Image Lightbox / Modal --- */
+        .modal {
+            display: flex;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 10, 10, 0.92);
+            backdrop-filter: blur(12px);
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            max-width: 85%;
+            max-height: 75vh;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9);
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            object-fit: contain;
+        }
+
+        .modal.open .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-caption {
+            margin-top: 18px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            text-align: center;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 25px;
+            right: 35px;
+            color: var(--text-main);
+            font-size: 2.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s ease, transform 0.2s ease;
+            line-height: 1;
+            z-index: 1010;
+        }
+
+        .modal-close:hover {
+            color: var(--accent-cyan);
+            transform: scale(1.1);
+        }
+
+        /* Modal Navigation Buttons */
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-cyan);
+            background: rgba(10, 10, 10, 0.7);
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            border: 1px solid rgba(34, 211, 238, 0.3);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1010;
+        }
+
+        .modal-prev { left: 30px; }
+        .modal-next { right: 30px; }
+
+        .modal-nav:hover {
+            background: rgba(34, 211, 238, 0.2);
+            transform: translateY(-50%) scale(1.1);
+            color: #ffffff;
+            border-color: var(--accent-cyan);
+        }
+
+        @media (max-width: 600px) {
+            .modal-prev { left: 10px; }
+            .modal-next { right: 10px; }
+            .modal-nav { width: 44px; height: 44px; font-size: 1rem; }
+        }
+
+        /* --- Project Info --- */
+        .project-info h3 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tech-pill {
+            background: rgba(34, 211, 238, 0.1);
+            color: var(--accent-cyan);
+            border: 1px solid rgba(34, 211, 238, 0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .project-desc {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .project-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            margin-right: 20px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .project-links a:hover { color: var(--accent-cyan); }
+        .project-links a:last-child:hover { color: var(--accent-purple); }
+
+        /* --- Scroll Animations --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ambient Background Glows -->
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <header class="hero reveal">
+            <div class="hero-greeting mono">
+                <i class="fa-solid fa-terminal"></i> Hello World
+            </div>
+            <h1>
+                Estifanos <br>
+                <span class="gradient-text">Getachew.</span>
+            </h1>
+            <p>Full-stack developer with a proven track record of leading Agile teams to build complex data integration systems. I combine a Master's degree in Computer Science from UWaterloo with deep, hands-on expertise in React, MySQL, and Node.js to turn intricate technical requirements into seamless digital experiences.</p>
+        </header>
+
+        <!-- Projects Section -->
+        <section class="projects">
+            <h2 class="section-title reveal">Selected Works</h2>
+
+            <!-- Project 1 -->
+            <article class="project-card reveal">
+                <div class="project-gallery">
+                    <div class="swiper mySwiper">
+                        <div class="swiper-wrapper">
+                             <div class="swiper-slide"><img src="./portfolio/teresa/login.png"></div>
+                            <div class="swiper-slide"><img src="./portfolio/teresa/dashboard.png"></div>
+                            <div class="swiper-slide"><img src="./portfolio/teresa/page_1"></div>
+                            <div class="swiper-slide"><img src="./portfolio/teresa/page_2"></div>
+                            <div class="swiper-slide"><img src="./portfolio/teresa/page_3"></div>
+                            <div class="swiper-slide"><img src="./portfolio/teresa/page_4"></div>
+                            <div class="swiper-slide"><img src="./portfolio/teresa/page_5"></div>
+                            <div class="swiper-slide"><img src="./portfolio/teresa/page_6"></div>
+                            <div class="swiper-slide"><img src="./portfolio/teresa/page_7"></div>
+                            <div class="swiper-slide"><img src="./portfolio/teresa/page_8"></div>
+                            <div class="swiper-slide"><img src="./portfolio/teresa/page_9"></div>
+                            <div class="swiper-slide"><img src="./portfolio/teresa/page_10"></div>
+                        </div>
+                        
+                        <div class="swiper-pagination"></div>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
+                </div>
+                
+                <div class="project-info">
+                    <h3>Coach Athlete Teresa's 5k Run</h3>
+                    <div class="tech-stack mono">
+                     <span class="tech-pill">NodJs</span>
+                        <span class="tech-pill">MySql</span>
+                        <span class="tech-pill">HTML5</span>
+                        <span class="tech-pill">Bootstrap</span>
+                        <span class="tech-pill">JQuery</span>
+                        <span class="tech-pill">CSS Grid</span>
+                        <span class="tech-pill">Vanilla JS</span>
+                    </div>
+                    <p class="project-desc">Full-stack platform and visual identity for a Toronto 5k event. Features custom branding, dynamic registration, an e-commerce merchandise cart, and an authenticated admin dashboard for order and attendee management.</p>
+                    <div class="project-links">
+                        <a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live Site</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Project 2 -->
+            <article class="project-card reveal">
+                <div class="project-gallery">
+                    <div class="swiper mySwiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide"><img src="./portfolio/cowash/page 1.png" alt="E-commerce 1"></div>
+                            <div class="swiper-slide"><img src="./portfolio/cowash/page 2.png" alt="E-commerce 1"></div>
+                            <div class="swiper-slide"><img src="./portfolio/cowash/page 3.png" alt="E-commerce 1"></div>
+                            <div class="swiper-slide"><img src="./portfolio/cowash/page 4.png" alt="E-commerce 1"></div>
+                            <div class="swiper-slide"><img src="./portfolio/cowash/page 5.png" alt="E-commerce 1"></div>
+                            <div class="swiper-slide"><img src="./portfolio/cowash/page 6.png" alt="E-commerce 1"></div>
+                            <div class="swiper-slide"><img src="./portfolio/cowash/page 7.png" alt="E-commerce 1"></div>
+                            <div class="swiper-slide"><img src="./portfolio/cowash/page 8.png" alt="E-commerce 1"></div>
+                            <div class="swiper-slide"><img src="./portfolio/cowash/page 9.png" alt="E-commerce 1"></div>
+                            <div class="swiper-slide"><img src="./portfolio/cowash/page 10.png" alt="E-commerce 1"></div>
+                            <div class="swiper-slide"><img src="./portfolio/cowash/page 12.png" alt="E-commerce 1"></div>
+                            <div class="swiper-slide"><img src="./portfolio/cowash/page 13.png" alt="E-commerce 1"></div>
+                            <div class="swiper-slide"><img src="./portfolio/cowash/page 14.png" alt="E-commerce 1"></div>
+                            <div class="swiper-slide"><img src="./portfolio/cowash/page 15.png" alt="E-commerce 1"></div>
+                            <div class="swiper-slide"><img src="./portfolio/cowash/page 16.png" alt="E-commerce 1"></div>
+                            <div class="swiper-slide"><img src="./portfolio/cowash/page 17.png" alt="E-commerce 1"></div>
+                            <div class="swiper-slide"><img src="./portfolio/cowash/page 18.png" alt="E-commerce 1"></div>
+                            <div class="swiper-slide"><img src="./portfolio/cowash/page 19.png" alt="E-commerce 1"></div>
+                        </div>
+                        
+                        <div class="swiper-pagination"></div>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
+                </div>
+                
+                <div class="project-info">
+                    <h3>COWASH Data Integration System</h3>
+                    <div class="tech-stack mono">
+                        <span class="tech-pill">React</span>
+                        <span class="tech-pill">Node.js</span>
+                        <span class="tech-pill">Express</span>
+                        <span class="tech-pill">D3.js</span>
+                        <span class="tech-pill">MySQL</span>
+                        <span class="tech-pill">Map APIs</span>
+                    </div>
+                    
+                    <p class="project-desc">Architected and developed a full-stack microservices platform built with React, Node.js, and D3.js to unify disparate datasets. Features interactive geospatial mapping, dynamic data charts, real-time statistical processing, multi-format reporting (Excel, PDF, CSV), and role-based user management.</p>
+                    <!-- <div class="project-links">
+                        <a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live Site</a>
+                        <a href="#"><i class="fa-brands fa-github"></i> Source Code</a>
+                    </div> -->
+                </div>
+            </article>
+
+        </section>
+    </div>
+
+    <!-- Image Modal / Lightbox Overlay with Navigation -->
+    <div class="modal" id="imageModal">
+        <span class="modal-close" id="modalClose">&times;</span>
+        
+        <!-- Modal Navigation Arrows -->
+        <button class="modal-nav modal-prev" id="modalPrev" aria-label="Previous Image">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button class="modal-nav modal-next" id="modalNext" aria-label="Next Image">
+            <i class="fa-solid fa-chevron-right"></i>
+        </button>
+
+        <img class="modal-content" id="modalImg" alt="Expanded Screenshot">
+        <div class="modal-caption mono" id="modalCaption"></div>
+    </div>
+
+    <!-- Swiper.js Script -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    
+    <script>
+        // 1. Initialize the 3D Carousel (Swiper.js)
+        const swipers = document.querySelectorAll('.mySwiper');
+        swipers.forEach(swiperEl => {
+            new Swiper(swiperEl, {
+                effect: 'coverflow',
+                grabCursor: true,
+                centeredSlides: true,
+                slidesPerView: 'auto',
+                coverflowEffect: {
+                    rotate: 20,
+                    stretch: 0,
+                    depth: 150, 
+                    modifier: 1,
+                    slideShadows: true,
+                },
+                autoplay: {
+                    delay: 3500,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    dynamicBullets: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                loop: true
+            });
+        });
+
+        // 2. Image Modal / Lightbox Logic with In-Modal Navigation
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImg');
+        const modalCaption = document.getElementById('modalCaption');
+        const modalClose = document.getElementById('modalClose');
+        const modalPrev = document.getElementById('modalPrev');
+        const modalNext = document.getElementById('modalNext');
+
+        let currentGalleryImages = [];
+        let currentImageIndex = 0;
+
+        // Function to update modal image and caption
+        function updateModalContent() {
+            if (!currentGalleryImages.length) return;
+            const currentImg = currentGalleryImages[currentImageIndex];
+            modalImg.src = currentImg.src;
+            modalCaption.textContent = `${currentImg.alt || 'Project Screenshot'} (${currentImageIndex + 1} / ${currentGalleryImages.length})`;
+        }
+
+        // Add click listener to all slide images
+        document.querySelectorAll('.swiper-slide img').forEach(img => {
+            img.addEventListener('click', () => {
+                // Find parent swiper gallery to collect all images for this specific project
+                const parentSwiper = img.closest('.swiper');
+                
+                // Get all original slide images (filtering out Swiper duplicate slides)
+                const slides = Array.from(parentSwiper.querySelectorAll('.swiper-slide:not(.swiper-slide-duplicate) img'));
+                
+                currentGalleryImages = slides;
+                
+                // Find index of clicked image
+                currentImageIndex = slides.findIndex(s => s.src === img.src);
+                if (currentImageIndex === -1) currentImageIndex = 0;
+
+                updateModalContent();
+                modal.classList.add('open');
+            });
+        });
+
+        // Modal Navigation Handlers
+        modalNext.addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentImageIndex = (currentImageIndex + 1) % currentGalleryImages.length;
+            updateModalContent();
+        });
+
+        modalPrev.addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentImageIndex = (currentImageIndex - 1 + currentGalleryImages.length) % currentGalleryImages.length;
+            updateModalContent();
+        });
+
+        const closeModal = () => {
+            modal.classList.remove('open');
+        };
+
+        modalClose.addEventListener('click', closeModal);
+
+        // Close when clicking outside image / controls
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Keyboard Controls (Arrow Keys & Escape)
+        document.addEventListener('keydown', (e) => {
+            if (!modal.classList.contains('open')) return;
+            
+            if (e.key === 'Escape') {
+                closeModal();
+            } else if (e.key === 'ArrowRight') {
+                currentImageIndex = (currentImageIndex + 1) % currentGalleryImages.length;
+                updateModalContent();
+            } else if (e.key === 'ArrowLeft') {
+                currentImageIndex = (currentImageIndex - 1 + currentGalleryImages.length) % currentGalleryImages.length;
+                updateModalContent();
+            }
+        });
+
+        // 3. Intersection Observer for Scroll Reveal Animations
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            root: null,
+            threshold: 0.15, 
+            rootMargin: "0px"
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+    </script>
+</body>
+</html>
